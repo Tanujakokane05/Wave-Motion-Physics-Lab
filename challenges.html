@@ -2,22 +2,15 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Wave Challenges</title>
 
     <link rel="stylesheet" href="style.css">
-
 </head>
 
-
 <body>
-
 
 <header class="topbar">
 
@@ -25,31 +18,12 @@
         🌊 <span>Physics Lab</span>
     </div>
 
-
     <nav>
-
-        <a href="index.html">
-            Home
-        </a>
-
-        <a href="simulation.html">
-            Simulation
-        </a>
-
-        <a href="notes.html">
-            Notes
-        </a>
-
-        <a
-            href="challenges.html"
-            class="active">
-            Challenges
-        </a>
-
-        <a href="quiz.html">
-            Quiz
-        </a>
-
+        <a href="index.html">Home</a>
+        <a href="simulation.html">Simulation</a>
+        <a href="notes.html">Notes</a>
+        <a href="challenges.html" class="active">Challenges</a>
+        <a href="quiz.html">Quiz</a>
     </nav>
 
 </header>
@@ -57,31 +31,35 @@
 
 <main class="challenge-page">
 
+    <div class="page-heading">
 
-    <div class="page-heading center">
+        <div>
 
-        <div class="badge">
-            MISSION MODE
+            <div class="badge">
+                STAGE 3 — TEST YOUR UNDERSTANDING
+            </div>
+
+            <h1>Wave Motion Challenges</h1>
+
+            <p>
+                Apply what you learned from the simulation.
+            </p>
+
         </div>
-
-        <h1>
-            🎯 Wave Challenges
-        </h1>
-
-        <p>
-            Apply wave concepts to solve physics problems.
-        </p>
 
     </div>
 
 
-    <div class="challenge-container">
+    <section class="challenge-container">
 
-
-        <div class="challenge-progress">
+        <div class="challenge-top">
 
             <span id="challengeNumber">
                 Challenge 1 of 5
+            </span>
+
+            <span>
+                Score: <strong id="challengeScore">0</strong>
             </span>
 
         </div>
@@ -90,70 +68,48 @@
         <div class="progress-bar">
 
             <div
-                id="challengeProgress">
+                id="challengeProgress"
+                class="progress-fill">
             </div>
 
         </div>
 
 
-        <div class="challenge-card">
+        <h2 id="challengeTitle">
+            Challenge 1
+        </h2>
 
 
-            <div class="challenge-icon">
-                🌊
-            </div>
-
-
-            <h2 id="challengeTitle">
-                Challenge 1
-            </h2>
-
+        <div class="question-box">
 
             <p id="challengeQuestion">
+                Loading question...
             </p>
 
-
-            <div
-                id="challengeOptions"
-                class="challenge-options">
-            </div>
-
-
-            <div
-                id="challengeFeedback"
-                class="feedback">
-            </div>
-
-
-            <button
-                id="nextChallenge"
-                class="primary-btn"
-                style="display:none;">
-
-                Next Challenge →
-
-            </button>
-
         </div>
 
 
-        <div class="score-card">
-
-            <span>
-                YOUR SCORE
-            </span>
-
-            <strong id="challengeScore">
-                0
-            </strong>
-
-            <small>
-                points
-            </small>
-
+        <div
+            id="challengeOptions"
+            class="challenge-options">
         </div>
 
-    </div>
+
+        <div
+            id="challengeFeedback"
+            class="challenge-feedback">
+        </div>
+
+
+        <button
+            id="nextChallenge"
+            class="primary-btn next-btn">
+
+            Next Challenge →
+
+        </button>
+
+    </section>
 
 </main>
 
@@ -161,7 +117,7 @@
 <footer>
 
     <p>
-        🌊 Physics Lab • Challenge Your Understanding
+        🌊 Physics Lab • Wave Motion
     </p>
 
 </footer>

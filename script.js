@@ -1,61 +1,112 @@
-/* =========================================================
-   🌊 WAVE MOTION PHYSICS LAB
-   PART 1 — MAIN WAVE SIMULATION
-========================================================= */
+/* =====================================================
+   WAVE MOTION PHYSICS LAB
+===================================================== */
 
-const frequencySlider = document.getElementById("frequencySlider");
-const wavelengthSlider = document.getElementById("wavelengthSlider");
-const amplitudeSlider = document.getElementById("amplitudeSlider");
 
-if (frequencySlider && wavelengthSlider && amplitudeSlider) {
+/* =====================================================
+   WAVE SIMULATION
+===================================================== */
 
-    /* -----------------------------------------------------
-       ELEMENTS
-    ----------------------------------------------------- */
+const frequencySlider =
+    document.getElementById("frequencySlider");
 
-    const frequencyValue = document.getElementById("frequencyValue");
-    const wavelengthValue = document.getElementById("wavelengthValue");
-    const amplitudeValue = document.getElementById("amplitudeValue");
-    const speedValue = document.getElementById("speedValue");
+const wavelengthSlider =
+    document.getElementById("wavelengthSlider");
 
-    const frequencyStat = document.getElementById("frequencyStat");
-    const wavelengthStat = document.getElementById("wavelengthStat");
-    const amplitudeStat = document.getElementById("amplitudeStat");
-    const speedStat = document.getElementById("speedStat");
+const amplitudeSlider =
+    document.getElementById("amplitudeSlider");
 
-    const periodValue = document.getElementById("periodValue");
-    const waveCalculation = document.getElementById("waveCalculation");
-    const observation = document.getElementById("waveObservation");
 
-    const playBtn = document.getElementById("playBtn");
-    const pauseBtn = document.getElementById("pauseBtn");
-    const resetBtn = document.getElementById("resetWaveBtn");
+if (
+    frequencySlider &&
+    wavelengthSlider &&
+    amplitudeSlider
+) {
 
-    const canvas = document.getElementById("waveCanvas");
+    const frequencyValue =
+        document.getElementById("frequencyValue");
 
-    let ctx = null;
+    const wavelengthValue =
+        document.getElementById("wavelengthValue");
 
-    if (canvas) {
-        ctx = canvas.getContext("2d");
-    }
+    const amplitudeValue =
+        document.getElementById("amplitudeValue");
+
+    const speedValue =
+        document.getElementById("speedValue");
+
+    const frequencyStat =
+        document.getElementById("frequencyStat");
+
+    const wavelengthStat =
+        document.getElementById("wavelengthStat");
+
+    const amplitudeStat =
+        document.getElementById("amplitudeStat");
+
+    const speedStat =
+        document.getElementById("speedStat");
+
+    const periodValue =
+        document.getElementById("periodValue");
+
+    const waveCalculation =
+        document.getElementById("waveCalculation");
+
+    const observation =
+        document.getElementById("waveObservation");
+
+    const playBtn =
+        document.getElementById("playBtn");
+
+    const pauseBtn =
+        document.getElementById("pauseBtn");
+
+    const resetBtn =
+        document.getElementById("resetWaveBtn");
+
+    const canvas =
+        document.getElementById("waveCanvas");
+
+    const graphCanvas =
+        document.getElementById("waveGraph");
+
+
+    const ctx =
+        canvas ? canvas.getContext("2d") : null;
+
+    const graphCtx =
+        graphCanvas
+            ? graphCanvas.getContext("2d")
+            : null;
+
 
     let running = true;
+
     let time = 0;
-    let animationFrame = null;
 
 
-    /* =====================================================
-       GET CURRENT VALUES
-    ===================================================== */
+    /* =================================================
+       GET VALUES
+    ================================================= */
 
     function getValues() {
 
-        const frequency = Number(frequencySlider.value);
-        const wavelength = Number(wavelengthSlider.value);
-        const amplitude = Number(amplitudeSlider.value);
+        const frequency =
+            Number(frequencySlider.value);
 
-        const speed = frequency * wavelength;
-        const period = 1 / frequency;
+        const wavelength =
+            Number(wavelengthSlider.value);
+
+        const amplitude =
+            Number(amplitudeSlider.value);
+
+        const speed =
+            frequency * wavelength;
+
+        const period =
+            1 / frequency;
+
 
         return {
             frequency,
@@ -67,72 +118,65 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
     }
 
 
-    /* =====================================================
-       UPDATE TEXT VALUES
-    ===================================================== */
+    /* =================================================
+       UPDATE VALUES
+    ================================================= */
 
     function updateValues() {
 
-        const values = getValues();
+        const values =
+            getValues();
 
-        if (frequencyValue) {
+
+        if (frequencyValue)
             frequencyValue.textContent =
                 values.frequency + " Hz";
-        }
 
-        if (wavelengthValue) {
+
+        if (wavelengthValue)
             wavelengthValue.textContent =
                 values.wavelength + " m";
-        }
 
-        if (amplitudeValue) {
+
+        if (amplitudeValue)
             amplitudeValue.textContent =
                 values.amplitude + " m";
-        }
 
-        if (speedValue) {
+
+        if (speedValue)
             speedValue.textContent =
                 values.speed.toFixed(2) + " m/s";
-        }
 
 
-        if (frequencyStat) {
+        if (frequencyStat)
             frequencyStat.textContent =
                 values.frequency + " Hz";
-        }
 
-        if (wavelengthStat) {
+
+        if (wavelengthStat)
             wavelengthStat.textContent =
                 values.wavelength + " m";
-        }
 
-        if (amplitudeStat) {
+
+        if (amplitudeStat)
             amplitudeStat.textContent =
                 values.amplitude + " m";
-        }
 
-        if (speedStat) {
+
+        if (speedStat)
             speedStat.textContent =
                 values.speed.toFixed(2) + " m/s";
-        }
 
 
-        if (periodValue) {
+        if (periodValue)
             periodValue.textContent =
                 values.period.toFixed(2) + " s";
-        }
 
 
-        if (waveCalculation) {
-
+        if (waveCalculation)
             waveCalculation.textContent =
                 `v = ${values.frequency} × ${values.wavelength} = ${values.speed.toFixed(2)} m/s`;
-        }
 
-
-        /* -------------------------------------------------
-           OBSERVATION MESSAGE
-        ------------------------------------------------- */
 
         if (observation) {
 
@@ -146,70 +190,83 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
             else if (values.wavelength >= 4) {
 
                 observation.textContent =
-                    "A larger wavelength means a larger distance between consecutive crests.";
+                    "A larger wavelength means greater distance between consecutive crests.";
 
             }
 
             else if (values.amplitude >= 1.6) {
 
                 observation.textContent =
-                    "A larger amplitude makes the wave taller but does not directly change wave speed.";
+                    "Increasing amplitude makes the wave taller.";
 
             }
 
             else {
 
                 observation.textContent =
-                    "Try changing one property at a time and observe what happens.";
+                    "Try changing one property at a time and observe the wave.";
+
             }
         }
     }
 
 
-    /* =====================================================
+    /* =================================================
        RESIZE MAIN CANVAS
-    ===================================================== */
+    ================================================= */
 
     function resizeCanvas() {
 
-        if (!canvas || !ctx) {
+        if (!canvas)
             return;
-        }
 
-        const rect = canvas.getBoundingClientRect();
 
-        const width = Math.max(rect.width, 700);
-        const height = Math.max(rect.height, 380);
+        const rect =
+            canvas.getBoundingClientRect();
+
+
+        const width =
+            Math.max(rect.width, 600);
+
+        const height =
+            Math.max(rect.height, 350);
+
 
         canvas.width = width;
-        canvas.height = height;
 
-        canvas.style.width = "100%";
-        canvas.style.height = "100%";
+        canvas.height = height;
     }
 
 
-    /* =====================================================
+    /* =================================================
        DRAW MAIN WAVE
-    ===================================================== */
+    ================================================= */
 
     function drawWave() {
 
-        if (!canvas || !ctx) {
+        if (!canvas || !ctx)
             return;
-        }
-
-        const width = canvas.width;
-        const height = canvas.height;
-
-        ctx.clearRect(0, 0, width, height);
 
 
-        /* -------------------------------------------------
-           BACKGROUND
-        ------------------------------------------------- */
+        const width =
+            canvas.width;
 
-        ctx.fillStyle = "#071426";
+        const height =
+            canvas.height;
+
+
+        ctx.clearRect(
+            0,
+            0,
+            width,
+            height
+        );
+
+
+        /* BACKGROUND */
+
+        ctx.fillStyle =
+            "#071426";
 
         ctx.fillRect(
             0,
@@ -219,47 +276,41 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
         );
 
 
-        const values = getValues();
+        const values =
+            getValues();
 
-        const center = height / 2;
 
+        const center =
+            height / 2;
 
-        /* -------------------------------------------------
-           AMPLITUDE
-        ------------------------------------------------- */
 
         const amplitude =
             Math.min(
-                height * 0.30,
+                height * 0.25,
                 Math.max(
-                    35,
-                    values.amplitude * 65
+                    40,
+                    values.amplitude * 55
                 )
             );
 
-
-        /* -------------------------------------------------
-           WAVELENGTH
-        ------------------------------------------------- */
 
         const wavelength =
             Math.min(
-                400,
+                350,
                 Math.max(
-                    100,
-                    values.wavelength * 60
+                    120,
+                    values.wavelength * 55
                 )
             );
 
 
-        /* =================================================
-           GRID
-        ================================================= */
+        /* GRID */
 
         ctx.strokeStyle =
-            "rgba(80,180,230,0.12)";
+            "rgba(80,180,230,0.15)";
 
         ctx.lineWidth = 1;
+
 
         for (
             let x = 0;
@@ -270,6 +321,7 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
             ctx.beginPath();
 
             ctx.moveTo(x, 0);
+
             ctx.lineTo(x, height);
 
             ctx.stroke();
@@ -285,15 +337,14 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
             ctx.beginPath();
 
             ctx.moveTo(0, y);
+
             ctx.lineTo(width, y);
 
             ctx.stroke();
         }
 
 
-        /* =================================================
-           MEAN POSITION
-        ================================================= */
+        /* MEAN POSITION */
 
         ctx.beginPath();
 
@@ -303,9 +354,7 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
         ]);
 
         ctx.strokeStyle =
-            "rgba(255,255,255,0.35)";
-
-        ctx.lineWidth = 2;
+            "rgba(255,255,255,0.4)";
 
         ctx.moveTo(
             0,
@@ -322,7 +371,8 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
         ctx.setLineDash([]);
 
 
-        ctx.fillStyle = "#cbd5e1";
+        ctx.fillStyle =
+            "#cbd5e1";
 
         ctx.font =
             "14px Arial";
@@ -334,11 +384,10 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
         );
 
 
-        /* =================================================
-           WAVE
-        ================================================= */
+        /* WAVE */
 
         ctx.beginPath();
+
 
         for (
             let x = 0;
@@ -355,26 +404,14 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
                     time
                 );
 
-            if (x === 0) {
 
-                ctx.moveTo(
-                    x,
-                    y
-                );
+            if (x === 0)
+                ctx.moveTo(x, y);
 
-            }
-
-            else {
-
-                ctx.lineTo(
-                    x,
-                    y
-                );
-            }
+            else
+                ctx.lineTo(x, y);
         }
 
-
-        /* Glow effect */
 
         ctx.shadowBlur = 18;
 
@@ -391,9 +428,7 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
         ctx.shadowBlur = 0;
 
 
-        /* =================================================
-           CREST
-        ================================================= */
+        /* CREST */
 
         const crestX =
             wavelength / 4;
@@ -428,9 +463,7 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
         );
 
 
-        /* =================================================
-           TROUGH
-        ================================================= */
+        /* TROUGH */
 
         const troughX =
             (3 * wavelength) / 4;
@@ -455,9 +488,6 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
         ctx.fill();
 
 
-        ctx.font =
-            "bold 15px Arial";
-
         ctx.fillText(
             "TROUGH",
             troughX - 30,
@@ -465,11 +495,10 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
         );
 
 
-        /* =================================================
-           AMPLITUDE ARROW
-        ================================================= */
+        /* AMPLITUDE */
 
         const ax = 70;
+
 
         ctx.beginPath();
 
@@ -477,6 +506,7 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
             "#c084fc";
 
         ctx.lineWidth = 3;
+
 
         ctx.moveTo(
             ax,
@@ -489,23 +519,6 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
         );
 
 
-        /* Arrow head */
-
-        ctx.moveTo(
-            ax - 7,
-            crestY + 10
-        );
-
-        ctx.lineTo(
-            ax,
-            crestY
-        );
-
-        ctx.lineTo(
-            ax + 7,
-            crestY + 10
-        );
-
         ctx.stroke();
 
 
@@ -515,6 +528,7 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
         ctx.font =
             "bold 14px Arial";
 
+
         ctx.fillText(
             "Amplitude",
             ax + 12,
@@ -522,12 +536,11 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
         );
 
 
-        /* =================================================
-           WAVELENGTH ARROW
-        ================================================= */
+        /* WAVELENGTH */
 
         const wy =
             height - 45;
+
 
         const start =
             crestX;
@@ -536,7 +549,7 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
             crestX + wavelength;
 
 
-        if (end < width - 20) {
+        if (end < width) {
 
             ctx.beginPath();
 
@@ -546,8 +559,6 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
             ctx.lineWidth = 3;
 
 
-            /* Main line */
-
             ctx.moveTo(
                 start,
                 wy
@@ -558,41 +569,6 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
                 wy
             );
 
-
-            /* Left arrow */
-
-            ctx.moveTo(
-                start + 10,
-                wy - 7
-            );
-
-            ctx.lineTo(
-                start,
-                wy
-            );
-
-            ctx.lineTo(
-                start + 10,
-                wy + 7
-            );
-
-
-            /* Right arrow */
-
-            ctx.moveTo(
-                end - 10,
-                wy - 7
-            );
-
-            ctx.lineTo(
-                end,
-                wy
-            );
-
-            ctx.lineTo(
-                end - 10,
-                wy + 7
-            );
 
             ctx.stroke();
 
@@ -602,6 +578,7 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
 
             ctx.font =
                 "bold 14px Arial";
+
 
             ctx.fillText(
                 "Wavelength λ = " +
@@ -613,9 +590,7 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
         }
 
 
-        /* =================================================
-           PARTICLES
-        ================================================= */
+        /* PARTICLES */
 
         for (
             let x = 0;
@@ -643,26 +618,19 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
                 Math.PI * 2
             );
 
+
             ctx.fillStyle =
                 "#ffffff";
 
-            ctx.shadowBlur = 10;
-
-            ctx.shadowColor =
-                "#ffffff";
-
             ctx.fill();
-
-            ctx.shadowBlur = 0;
         }
 
 
-        /* =================================================
-           INFORMATION BOX
-        ================================================= */
+        /* INFORMATION PANEL */
 
-        const panelW = 230;
-        const panelH = 145;
+        const panelW = 220;
+
+        const panelH = 135;
 
         const panelX =
             width - panelW - 20;
@@ -671,7 +639,7 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
 
 
         ctx.fillStyle =
-            "rgba(5,20,38,0.96)";
+            "rgba(5,20,38,0.95)";
 
         ctx.fillRect(
             panelX,
@@ -683,8 +651,6 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
 
         ctx.strokeStyle =
             "#27c7ff";
-
-        ctx.lineWidth = 1;
 
         ctx.strokeRect(
             panelX,
@@ -699,6 +665,7 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
 
         ctx.font =
             "bold 16px Arial";
+
 
         ctx.fillText(
             "WAVE PROFILE",
@@ -757,790 +724,428 @@ if (frequencySlider && wavelengthSlider && amplitudeSlider) {
             panelX + 15,
             panelY + 124
         );
-
-
-        /* =================================================
-           DISTANCE LABEL
-        ================================================= */
-
-        ctx.fillStyle =
-            "rgba(255,255,255,0.7)";
-
-        ctx.font =
-            "13px Arial";
-
-        ctx.fillText(
-            "Distance →",
-            width - 100,
-            height - 12
-        );
     }
-    /* =========================================================
-   PART 2 — WAVE PROFILE GRAPH + ANIMATION + CONTROLS
-========================================================= */
-
-/* =====================================================
-   WAVE PROFILE GRAPH
-   DISPLACEMENT vs DISTANCE
-===================================================== */
-
-const graphCanvas =
-    document.getElementById("waveGraph");
-
-if (graphCanvas) {
-
-    const graphCtx =
-        graphCanvas.getContext("2d");
 
 
-    function drawWaveGraph() {
+    /* =================================================
+       DIFFERENT WAVE PROFILE GRAPH
+    ================================================= */
+function drawWaveGraph() {
 
-        const rect =
-            graphCanvas.getBoundingClientRect();
+    if (!graphCanvas || !graphCtx)
+        return;
 
-        const width =
-            Math.max(rect.width, 600);
+    const rect =
+        graphCanvas.getBoundingClientRect();
 
-        const height =
-            Math.max(rect.height, 300);
+    const width =
+        Math.max(rect.width, 600);
 
+    const height =
+        Math.max(rect.height, 300);
 
-        graphCanvas.width = width;
-        graphCanvas.height = height;
+    graphCanvas.width = width;
+    graphCanvas.height = height;
 
+    /* =========================
+       BACKGROUND
+    ========================= */
 
-        /* ==============================
-           BACKGROUND
-        ============================== */
+    graphCtx.fillStyle = "#050b18";
 
-        graphCtx.fillStyle = "#071426";
+    graphCtx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
 
-        graphCtx.fillRect(
-            0,
-            0,
-            width,
-            height
-        );
+    const values = getValues();
 
+    /* =========================
+       GRAPH AREA
+    ========================= */
 
-        const values =
-            getValues();
+    const left = 70;
+    const right = 30;
+    const top = 50;
+    const bottom = 60;
 
+    const graphWidth =
+        width - left - right;
 
-        /* ==============================
-           GRAPH AREA
-        ============================== */
+    const graphHeight =
+        height - top - bottom;
 
-        const left =
-            65;
+    /* =========================
+       GRID
+    ========================= */
 
-        const right =
-            width - 30;
+    graphCtx.strokeStyle =
+        "rgba(255,255,255,0.12)";
 
-        const top =
-            35;
+    graphCtx.lineWidth = 1;
 
-        const bottom =
-            height - 55;
+    for (
+        let i = 0;
+        i <= 10;
+        i++
+    ) {
 
-
-        const graphWidth =
-            right - left;
-
-        const graphHeight =
-            bottom - top;
-
-
-        const center =
-            top + graphHeight / 2;
-
-
-        /* ==============================
-           SCALE
-        ============================== */
-
-        const amplitude =
-            Math.max(
-                30,
-                Math.min(
-                    graphHeight * 0.40,
-                    values.amplitude * 55
-                )
-            );
-
-
-        const wavelength =
-            Math.max(
-                120,
-                Math.min(
-                    350,
-                    values.wavelength * 55
-                )
-            );
-
-
-        /* ==============================
-           GRID
-        ============================== */
-
-        graphCtx.strokeStyle =
-            "rgba(80,180,230,0.15)";
-
-        graphCtx.lineWidth = 1;
-
-
-        for (
-            let x = left;
-            x <= right;
-            x += 40
-        ) {
-
-            graphCtx.beginPath();
-
-            graphCtx.moveTo(
-                x,
-                top
-            );
-
-            graphCtx.lineTo(
-                x,
-                bottom
-            );
-
-            graphCtx.stroke();
-
-        }
-
-
-        for (
-            let y = top;
-            y <= bottom;
-            y += 40
-        ) {
-
-            graphCtx.beginPath();
-
-            graphCtx.moveTo(
-                left,
-                y
-            );
-
-            graphCtx.lineTo(
-                right,
-                y
-            );
-
-            graphCtx.stroke();
-
-        }
-
-
-        /* ==============================
-           AXES
-        ============================== */
-
-        graphCtx.strokeStyle =
-            "rgba(255,255,255,0.65)";
-
-        graphCtx.lineWidth = 2;
-
-
-        // Y axis
+        const x =
+            left +
+            (graphWidth / 10) * i;
 
         graphCtx.beginPath();
 
         graphCtx.moveTo(
-            left,
+            x,
             top
         );
 
         graphCtx.lineTo(
-            left,
-            bottom
+            x,
+            height - bottom
         );
 
         graphCtx.stroke();
+    }
 
+    for (
+        let i = 0;
+        i <= 5;
+        i++
+    ) {
 
-        // X axis
+        const y =
+            top +
+            (graphHeight / 5) * i;
 
         graphCtx.beginPath();
 
         graphCtx.moveTo(
             left,
-            center
+            y
         );
 
         graphCtx.lineTo(
-            right,
-            center
+            width - right,
+            y
         );
 
         graphCtx.stroke();
+    }
 
+    /* =========================
+       AXES
+    ========================= */
 
-        /* ==============================
-           AXIS LABELS
-        ============================== */
+    graphCtx.strokeStyle =
+        "#94a3b8";
 
-        graphCtx.fillStyle =
-            "#cbd5e1";
+    graphCtx.lineWidth = 2;
 
-        graphCtx.font =
-            "13px Arial";
+    graphCtx.beginPath();
 
+    graphCtx.moveTo(
+        left,
+        top
+    );
 
-        graphCtx.fillText(
-            "Displacement (m)",
-            10,
-            top + 5
-        );
+    graphCtx.lineTo(
+        left,
+        height - bottom
+    );
 
+    graphCtx.lineTo(
+        width - right,
+        height - bottom
+    );
 
-        graphCtx.fillText(
-            "Distance (m)",
-            right - 80,
-            bottom + 35
-        );
+    graphCtx.stroke();
 
+    /* =========================
+       AXIS LABELS
+    ========================= */
 
-        graphCtx.fillText(
-            "0",
-            left - 15,
-            center + 5
-        );
+    graphCtx.fillStyle =
+        "#ffffff";
 
+    graphCtx.font =
+        "bold 14px Arial";
 
-        /* ==============================
-           MEAN POSITION
-        ============================== */
+    graphCtx.fillText(
+        "Wavelength λ (m)",
+        10,
+        top - 15
+    );
 
-        graphCtx.setLineDash([
-            7,
-            7
-        ]);
+    graphCtx.fillText(
+        "Frequency f (Hz) →",
+        width - 150,
+        height - 20
+    );
 
-        graphCtx.strokeStyle =
-            "rgba(255,255,255,0.45)";
+    /* =========================
+       RELATIONSHIP CURVE
+       
+       v = fλ
+       λ = v/f
+    ========================= */
 
-        graphCtx.beginPath();
+    const speed =
+        values.speed;
 
-        graphCtx.moveTo(
-            left,
-            center
-        );
+    graphCtx.beginPath();
 
-        graphCtx.lineTo(
-            right,
-            center
-        );
+    for (
+        let frequency = 1;
+        frequency <= 10;
+        frequency += 0.1
+    ) {
 
-        graphCtx.stroke();
+        const wavelength =
+            speed / frequency;
 
-        graphCtx.setLineDash([]);
-
-
-        graphCtx.fillStyle =
-            "#cbd5e1";
-
-        graphCtx.fillText(
-            "Mean Position",
-            left + 10,
-            center - 10
-        );
-
-
-        /* ==============================
-           WAVE PROFILE
-        ============================== */
-
-        graphCtx.beginPath();
-
-
-        for (
-            let x = left;
-            x <= right;
-            x += 2
-        ) {
-
-            const distance =
-                x - left;
-
-
-            const y =
-                center -
-                amplitude *
-                Math.sin(
-                    (2 * Math.PI * distance) /
-                    wavelength
-                );
-
-
-            if (
-                x === left
-            ) {
-
-                graphCtx.moveTo(
-                    x,
-                    y
-                );
-
-            } else {
-
-                graphCtx.lineTo(
-                    x,
-                    y
-                );
-
-            }
-
-        }
-
-
-        graphCtx.shadowBlur =
-            15;
-
-        graphCtx.shadowColor =
-            "#22d3ee";
-
-        graphCtx.strokeStyle =
-            "#22d3ee";
-
-        graphCtx.lineWidth =
-            4;
-
-        graphCtx.stroke();
-
-        graphCtx.shadowBlur = 0;
-
-
-        /* ==============================
-           CREST
-        ============================== */
-
-        const crestX =
+        const x =
             left +
-            wavelength / 4;
+            ((frequency - 1) / 9)
+            * graphWidth;
 
-
-        const crestY =
-            center -
-            amplitude;
-
-
-        graphCtx.beginPath();
-
-        graphCtx.arc(
-            crestX,
-            crestY,
-            7,
-            0,
-            Math.PI * 2
-        );
-
-        graphCtx.fillStyle =
-            "#facc15";
-
-        graphCtx.fill();
-
-
-        graphCtx.fillStyle =
-            "#facc15";
-
-        graphCtx.font =
-            "bold 14px Arial";
-
-        graphCtx.fillText(
-            "CREST",
-            crestX - 25,
-            crestY - 15
-        );
-
-
-        /* ==============================
-           TROUGH
-        ============================== */
-
-        const troughX =
-            left +
-            (3 * wavelength) / 4;
-
-
-        const troughY =
-            center +
-            amplitude;
-
-
-        graphCtx.beginPath();
-
-        graphCtx.arc(
-            troughX,
-            troughY,
-            7,
-            0,
-            Math.PI * 2
-        );
-
-        graphCtx.fillStyle =
-            "#fb7185";
-
-        graphCtx.fill();
-
-
-        graphCtx.fillStyle =
-            "#fb7185";
-
-        graphCtx.fillText(
-            "TROUGH",
-            troughX - 28,
-            troughY + 25
-        );
-
-
-        /* ==============================
-           AMPLITUDE MEASUREMENT
-        ============================== */
-
-        const ax =
-            left + 35;
-
-
-        graphCtx.strokeStyle =
-            "#c084fc";
-
-        graphCtx.lineWidth =
-            3;
-
-
-        graphCtx.beginPath();
-
-        graphCtx.moveTo(
-            ax,
-            center
-        );
-
-        graphCtx.lineTo(
-            ax,
-            crestY
-        );
-
-        graphCtx.stroke();
-
-
-        // Arrow top
-
-        graphCtx.beginPath();
-
-        graphCtx.moveTo(
-            ax - 6,
-            crestY + 10
-        );
-
-        graphCtx.lineTo(
-            ax,
-            crestY
-        );
-
-        graphCtx.lineTo(
-            ax + 6,
-            crestY + 10
-        );
-
-        graphCtx.stroke();
-
-
-        graphCtx.fillStyle =
-            "#c084fc";
-
-        graphCtx.font =
-            "bold 13px Arial";
-
-        graphCtx.fillText(
-            "A = " +
-            values.amplitude +
-            " m",
-            ax + 8,
-            (center + crestY) / 2
-        );
-
-
-        /* ==============================
-           WAVELENGTH MEASUREMENT
-        ============================== */
-
-        const wy =
-            bottom - 20;
-
-
-        const startX =
-            left +
-            wavelength / 4;
-
-
-        const endX =
-            startX +
-            wavelength;
-
+        const y =
+            top +
+            graphHeight -
+            (wavelength / 10)
+            * graphHeight;
 
         if (
-            endX <= right
+            frequency === 1
         ) {
 
-            graphCtx.strokeStyle =
-                "#34d399";
-
-            graphCtx.lineWidth =
-                3;
-
-
-            graphCtx.beginPath();
-
             graphCtx.moveTo(
-                startX,
-                wy
+                x,
+                y
             );
+
+        } else {
 
             graphCtx.lineTo(
-                endX,
-                wy
+                x,
+                y
             );
+        }
+    }
 
-            graphCtx.stroke();
+    /* =========================
+       CURVE
+    ========================= */
+
+    graphCtx.shadowBlur = 15;
+
+    graphCtx.shadowColor =
+        "#38bdf8";
+
+    graphCtx.strokeStyle =
+        "#38bdf8";
+
+    graphCtx.lineWidth = 4;
+
+    graphCtx.stroke();
+
+    graphCtx.shadowBlur = 0;
+
+    /* =========================
+       CURRENT POINT
+    ========================= */
+
+    const currentX =
+        left +
+        ((values.frequency - 1) / 9)
+        * graphWidth;
+
+    const currentY =
+        top +
+        graphHeight -
+        (values.wavelength / 10)
+        * graphHeight;
+
+    graphCtx.beginPath();
+
+    graphCtx.arc(
+        currentX,
+        currentY,
+        8,
+        0,
+        Math.PI * 2
+    );
+
+    graphCtx.fillStyle =
+        "#facc15";
+
+    graphCtx.fill();
+
+    /* =========================
+       CURRENT VALUES
+    ========================= */
+
+    graphCtx.fillStyle =
+        "#facc15";
+
+    graphCtx.font =
+        "bold 14px Arial";
+
+    graphCtx.fillText(
+        "f = " +
+        values.frequency +
+        " Hz",
+        currentX + 12,
+        currentY - 10
+    );
+
+    graphCtx.fillText(
+        "λ = " +
+        values.wavelength +
+        " m",
+        currentX + 12,
+        currentY + 12
+    );
+
+    /* =========================
+       FORMULA
+    ========================= */
+
+    graphCtx.fillStyle =
+        "#43e6a1";
+
+    graphCtx.font =
+        "bold 15px Arial";
+
+    graphCtx.fillText(
+        "v = fλ    →    λ = v/f",
+        left + 15,
+        top + 25
+    );
+
+    /* =========================
+       EXPLANATION
+    ========================= */
+
+    graphCtx.fillStyle =
+        "#cbd5e1";
+
+    graphCtx.font =
+        "14px Arial";
+
+    graphCtx.fillText(
+        "Higher frequency → shorter wavelength",
+        left + 15,
+        height - 25
+    );
+}
+   
+    /* =================================================
+       ANIMATION
+    ================================================= */
+
+    function animateWave() {
+
+        if (running) {
+
+            const values =
+                getValues();
 
 
-            // Left arrow
-
-            graphCtx.beginPath();
-
-            graphCtx.moveTo(
-                startX + 9,
-                wy - 6
-            );
-
-            graphCtx.lineTo(
-                startX,
-                wy
-            );
-
-            graphCtx.lineTo(
-                startX + 9,
-                wy + 6
-            );
-
-            graphCtx.stroke();
-
-
-            // Right arrow
-
-            graphCtx.beginPath();
-
-            graphCtx.moveTo(
-                endX - 9,
-                wy - 6
-            );
-
-            graphCtx.lineTo(
-                endX,
-                wy
-            );
-
-            graphCtx.lineTo(
-                endX - 9,
-                wy + 6
-            );
-
-            graphCtx.stroke();
-
-
-            graphCtx.fillStyle =
-                "#34d399";
-
-            graphCtx.font =
-                "bold 13px Arial";
-
-
-            graphCtx.fillText(
-                "λ = " +
-                values.wavelength +
-                " m",
-                startX + 15,
-                wy - 8
-            );
-
+            time +=
+                values.frequency *
+                0.015;
         }
 
 
-        /* ==============================
-           TITLE
-        ============================== */
+        drawWave();
 
-        graphCtx.fillStyle =
-            "#ffffff";
-
-        graphCtx.font =
-            "bold 16px Arial";
-
-        graphCtx.fillText(
-            "Displacement vs Distance",
-            left + 10,
-            top - 12
-        );
+        drawWaveGraph();
 
 
-        /* ==============================
-           CURRENT VALUES
-        ============================== */
-
-        graphCtx.fillStyle =
-            "#27c7ff";
-
-        graphCtx.font =
-            "13px Arial";
-
-
-        graphCtx.fillText(
-            "Frequency: " +
-            values.frequency +
-            " Hz",
-            right - 190,
-            top - 12
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   ANIMATION
-========================================================= */
-
-function animateWave() {
-
-    if (running) {
-
-        const values =
-            getValues();
-
-
-        /*
-           Frequency controls
-           how quickly the wave moves.
-        */
-
-        time +=
-            values.frequency *
-            0.015;
-    }
-
-
-    drawWave();
-
-    drawWaveGraph();
-
-
-    animationFrame =
         requestAnimationFrame(
             animateWave
         );
-}
-
-
-/* =========================================================
-   SLIDER EVENTS
-========================================================= */
-
-frequencySlider.addEventListener(
-    "input",
-    function () {
-
-        updateValues();
-        drawWave();
-        drawWaveGraph();
-
     }
-);
 
 
-wavelengthSlider.addEventListener(
-    "input",
-    function () {
+    /* =================================================
+       BUTTONS
+    ================================================= */
 
-        updateValues();
-        drawWave();
-        drawWaveGraph();
-
-    }
-);
-
-
-amplitudeSlider.addEventListener(
-    "input",
-    function () {
-
-        updateValues();
-        drawWave();
-        drawWaveGraph();
-
-    }
-);
-
-
-/* =========================================================
-   PLAY BUTTON
-========================================================= */
-
-if (playBtn) {
-
-    playBtn.addEventListener(
-        "click",
-        function () {
-
-            running = true;
-
-        }
+    frequencySlider.addEventListener(
+        "input",
+        updateValues
     );
-}
 
 
-/* =========================================================
-   PAUSE BUTTON
-========================================================= */
-
-if (pauseBtn) {
-
-    pauseBtn.addEventListener(
-        "click",
-        function () {
-
-            running = false;
-
-        }
+    wavelengthSlider.addEventListener(
+        "input",
+        updateValues
     );
-}
 
 
-/* =========================================================
-   RESET BUTTON
-========================================================= */
+    amplitudeSlider.addEventListener(
+        "input",
+        updateValues
+    );
 
-if (resetBtn) {
 
-    resetBtn.addEventListener(
-        "click",
+    if (playBtn) {
+
+        playBtn.addEventListener(
+            "click",
+            function () {
+
+                running = true;
+
+            }
+        );
+    }
+
+
+    if (pauseBtn) {
+
+        pauseBtn.addEventListener(
+            "click",
+            function () {
+
+                running = false;
+
+            }
+        );
+    }
+
+
+    if (resetBtn) {
+
+        resetBtn.addEventListener(
+            "click",
+            function () {
+
+                frequencySlider.value = 2;
+
+                wavelengthSlider.value = 2;
+
+                amplitudeSlider.value = 1;
+
+                time = 0;
+
+                running = true;
+
+                updateValues();
+
+            }
+        );
+    }
+
+
+    window.addEventListener(
+        "resize",
         function () {
-
-            frequencySlider.value = 2;
-
-            wavelengthSlider.value = 2;
-
-            amplitudeSlider.value = 1;
-
-            time = 0;
-
-            running = true;
-
-            updateValues();
 
             resizeCanvas();
 
@@ -1550,43 +1155,19 @@ if (resetBtn) {
 
         }
     );
+
+
+    resizeCanvas();
+
+    updateValues();
+
+    animateWave();
 }
 
 
-/* =========================================================
-   WINDOW RESIZE
-========================================================= */
-
-window.addEventListener(
-    "resize",
-    function () {
-
-        resizeCanvas();
-
-        drawWave();
-
-        drawWaveGraph();
-
-    }
-);
-
-
-/* =========================================================
-   INITIALIZE SIMULATION
-========================================================= */
-
-resizeCanvas();
-
-updateValues();
-
-drawWave();
-
-drawWaveGraph();
-
-animateWave();
-/* =========================================================
-   PART 3 — WAVE CHALLENGES
-========================================================= */
+/* =====================================================
+   WAVE CHALLENGES
+===================================================== */
 
 const challengeQuestion =
     document.getElementById(
@@ -1595,11 +1176,6 @@ const challengeQuestion =
 
 
 if (challengeQuestion) {
-
-
-    /* =====================================================
-       CHALLENGE DATA
-    ===================================================== */
 
     const challenges = [
 
@@ -1685,50 +1261,40 @@ if (challengeQuestion) {
     ];
 
 
-    let currentChallenge = 0;
+    let current = 0;
 
-    let challengeScore = 0;
+    let score = 0;
 
-
-    /* =====================================================
-       ELEMENTS
-    ===================================================== */
 
     const title =
         document.getElementById(
             "challengeTitle"
         );
 
-
     const options =
         document.getElementById(
             "challengeOptions"
         );
-
 
     const feedback =
         document.getElementById(
             "challengeFeedback"
         );
 
-
     const next =
         document.getElementById(
             "nextChallenge"
         );
-
 
     const scoreElement =
         document.getElementById(
             "challengeScore"
         );
 
-
     const number =
         document.getElementById(
             "challengeNumber"
         );
-
 
     const progress =
         document.getElementById(
@@ -1736,61 +1302,36 @@ if (challengeQuestion) {
         );
 
 
-    /* =====================================================
-       LOAD CHALLENGE
-    ===================================================== */
-
     function loadChallenge() {
 
         const challenge =
-            challenges[currentChallenge];
+            challenges[current];
 
 
-        if (title) {
-
-            title.textContent =
-                challenge.title;
-        }
+        title.textContent =
+            challenge.title;
 
 
         challengeQuestion.textContent =
             challenge.question;
 
 
-        if (number) {
-
-            number.textContent =
-                `Challenge ${currentChallenge + 1} of ${challenges.length}`;
-        }
+        number.textContent =
+            `Challenge ${current + 1} of ${challenges.length}`;
 
 
-        if (progress) {
-
-            progress.style.width =
-                (
-                    (
-                        currentChallenge + 1
-                    ) /
-                    challenges.length *
-                    100
-                ) + "%";
-        }
+        progress.style.width =
+            ((current + 1) /
+            challenges.length *
+            100) + "%";
 
 
         options.innerHTML = "";
 
+        feedback.textContent = "";
 
-        if (feedback) {
-
-            feedback.textContent = "";
-        }
-
-
-        if (next) {
-
-            next.style.display =
-                "none";
-        }
+        next.style.display =
+            "none";
 
 
         challenge.options.forEach(
@@ -1835,17 +1376,13 @@ if (challengeQuestion) {
     }
 
 
-    /* =====================================================
-       CHECK CHALLENGE ANSWER
-    ===================================================== */
-
     function checkChallenge(
         selected,
         selectedButton
     ) {
 
         const challenge =
-            challenges[currentChallenge];
+            challenges[current];
 
 
         const buttons =
@@ -1881,7 +1418,7 @@ if (challengeQuestion) {
                 "#43e6a1";
 
 
-            challengeScore += 10;
+            score += 10;
 
         }
 
@@ -1892,20 +1429,15 @@ if (challengeQuestion) {
             );
 
 
-            if (
-                buttons[challenge.answer]
-            ) {
-
-                buttons[
-                    challenge.answer
-                ].classList.add(
-                    "correct"
-                );
-            }
+            buttons[
+                challenge.answer
+            ].classList.add(
+                "correct"
+            );
 
 
             feedback.textContent =
-                "❌ Not quite. The highlighted answer is correct.";
+                "❌ Incorrect. The highlighted answer is correct.";
 
 
             feedback.style.color =
@@ -1913,103 +1445,64 @@ if (challengeQuestion) {
         }
 
 
-        if (scoreElement) {
-
-            scoreElement.textContent =
-                challengeScore;
-        }
+        scoreElement.textContent =
+            score;
 
 
-        if (next) {
-
-            next.style.display =
-                "inline-flex";
-        }
+        next.style.display =
+            "inline-flex";
     }
 
 
-    /* =====================================================
-       NEXT CHALLENGE
-    ===================================================== */
+    next.addEventListener(
+        "click",
+        function () {
 
-    if (next) {
-
-        next.addEventListener(
-            "click",
-            function () {
-
-                currentChallenge++;
+            current++;
 
 
-                /* -----------------------------------------
-                   ALL CHALLENGES COMPLETED
-                ----------------------------------------- */
+            if (
+                current >=
+                challenges.length
+            ) {
 
-                if (
-                    currentChallenge >=
-                    challenges.length
-                ) {
-
-                    title.textContent =
-                        "🏆 Challenges Completed!";
+                title.textContent =
+                    "🏆 Challenges Completed!";
 
 
-                    challengeQuestion.textContent =
-                        `You scored ${challengeScore} out of 50.`;
+                challengeQuestion.textContent =
+                    `You scored ${score} out of 50.`;
 
 
-                    options.innerHTML =
-                        "";
+                options.innerHTML = "";
 
 
-                    if (feedback) {
-
-                        if (
-                            challengeScore >= 40
-                        ) {
-
-                            feedback.textContent =
-                                "🌟 Excellent! You understand Wave Motion very well.";
-
-                        }
-
-                        else {
-
-                            feedback.textContent =
-                                "📚 Good attempt! Review the Notes and try again.";
-                        }
+                feedback.textContent =
+                    score >= 40
+                        ? "🌟 Excellent! You understand wave motion very well."
+                        : "📚 Good attempt! Review the Notes and try again.";
 
 
-                        feedback.style.color =
-                            "#43e6a1";
-                    }
+                next.style.display =
+                    "none";
 
 
-                    next.style.display =
-                        "none";
-
-
-                    return;
-                }
-
-
-                loadChallenge();
-
+                return;
             }
-        );
-    }
 
 
-    /* =====================================================
-       START CHALLENGES
-    ===================================================== */
+            loadChallenge();
+        }
+    );
+
 
     loadChallenge();
-
 }
-/* =========================================================
-   PART 4 — WAVE MASTERY QUIZ
-========================================================= */
+
+
+/* =====================================================
+   WAVE QUIZ
+===================================================== */
 
 const quizQuestion =
     document.getElementById(
@@ -2018,11 +1511,6 @@ const quizQuestion =
 
 
 if (quizQuestion) {
-
-
-    /* =====================================================
-       QUIZ QUESTIONS
-    ===================================================== */
 
     const questions = [
 
@@ -2135,12 +1623,8 @@ if (quizQuestion) {
 
     let currentQuestion = 0;
 
-    let quizScore = 0;
+    let score = 0;
 
-
-    /* =====================================================
-       ELEMENTS
-    ===================================================== */
 
     const options =
         document.getElementById(
@@ -2166,7 +1650,7 @@ if (quizQuestion) {
         );
 
 
-    const quizScoreElement =
+    const quizScore =
         document.getElementById(
             "quizScore"
         );
@@ -2178,57 +1662,35 @@ if (quizQuestion) {
         );
 
 
-    /* =====================================================
-       LOAD QUESTION
-    ===================================================== */
-
     function loadQuestion() {
 
-        const question =
+        const q =
             questions[currentQuestion];
 
 
         quizQuestion.textContent =
-            question.question;
+            q.question;
 
 
-        if (questionNumber) {
-
-            questionNumber.textContent =
-                `Question ${currentQuestion + 1} of ${questions.length}`;
-        }
+        questionNumber.textContent =
+            `Question ${currentQuestion + 1} of ${questions.length}`;
 
 
-        if (progress) {
-
-            progress.style.width =
-                (
-                    (
-                        currentQuestion + 1
-                    ) /
-                    questions.length *
-                    100
-                ) + "%";
-        }
+        progress.style.width =
+            ((currentQuestion + 1) /
+            questions.length *
+            100) + "%";
 
 
         options.innerHTML = "";
 
+        feedback.textContent = "";
 
-        if (feedback) {
-
-            feedback.textContent = "";
-        }
-
-
-        if (next) {
-
-            next.style.display =
-                "none";
-        }
+        next.style.display =
+            "none";
 
 
-        question.options.forEach(
+        q.options.forEach(
             function (
                 option,
                 index
@@ -2270,16 +1732,12 @@ if (quizQuestion) {
     }
 
 
-    /* =====================================================
-       CHECK ANSWER
-    ===================================================== */
-
     function checkAnswer(
         selected,
         selectedButton
     ) {
 
-        const question =
+        const q =
             questions[currentQuestion];
 
 
@@ -2300,7 +1758,7 @@ if (quizQuestion) {
 
         if (
             selected ===
-            question.answer
+            q.answer
         ) {
 
             selectedButton.classList.add(
@@ -2316,7 +1774,7 @@ if (quizQuestion) {
                 "#43e6a1";
 
 
-            quizScore++;
+            score++;
 
         }
 
@@ -2327,16 +1785,11 @@ if (quizQuestion) {
             );
 
 
-            if (
-                buttons[question.answer]
-            ) {
-
-                buttons[
-                    question.answer
-                ].classList.add(
-                    "correct"
-                );
-            }
+            buttons[
+                q.answer
+            ].classList.add(
+                "correct"
+            );
 
 
             feedback.textContent =
@@ -2348,133 +1801,90 @@ if (quizQuestion) {
         }
 
 
-        if (quizScoreElement) {
-
-            quizScoreElement.textContent =
-                `Score: ${quizScore}`;
-        }
+        quizScore.textContent =
+            `Score: ${score}`;
 
 
-        if (next) {
-
-            next.style.display =
-                "inline-flex";
-        }
+        next.style.display =
+            "inline-flex";
     }
 
 
-    /* =====================================================
-       NEXT QUESTION
-    ===================================================== */
+    next.addEventListener(
+        "click",
+        function () {
 
-    if (next) {
-
-        next.addEventListener(
-            "click",
-            function () {
-
-                currentQuestion++;
+            currentQuestion++;
 
 
-                /* -----------------------------------------
-                   QUIZ COMPLETED
-                ----------------------------------------- */
+            if (
+                currentQuestion >=
+                questions.length
+            ) {
+
+                document.querySelector(
+                    ".quiz-container"
+                ).style.display =
+                    "none";
+
+
+                const result =
+                    document.getElementById(
+                        "quizResult"
+                    );
+
+
+                result.style.display =
+                    "block";
+
+
+                document.getElementById(
+                    "finalScore"
+                ).textContent =
+                    `${score} / ${questions.length}`;
+
+
+                const message =
+                    document.getElementById(
+                        "resultMessage"
+                    );
+
 
                 if (
-                    currentQuestion >=
+                    score ===
                     questions.length
                 ) {
 
-                    const quizContainer =
-                        document.querySelector(
-                            ".quiz-container"
-                        );
+                    message.textContent =
+                        "🌟 Outstanding! You have mastered Wave Motion.";
 
+                }
 
-                    if (quizContainer) {
+                else if (
+                    score >= 4
+                ) {
 
-                        quizContainer.style.display =
-                            "none";
-                    }
+                    message.textContent =
+                        "👏 Great job! Review a few concepts and try again.";
 
+                }
 
-                    const result =
-                        document.getElementById(
-                            "quizResult"
-                        );
+                else {
 
-
-                    if (result) {
-
-                        result.style.display =
-                            "block";
-                    }
-
-
-                    const finalScore =
-                        document.getElementById(
-                            "finalScore"
-                        );
-
-
-                    if (finalScore) {
-
-                        finalScore.textContent =
-                            `${quizScore} / ${questions.length}`;
-                    }
-
-
-                    const message =
-                        document.getElementById(
-                            "resultMessage"
-                        );
-
-
-                    if (message) {
-
-                        if (
-                            quizScore ===
-                            questions.length
-                        ) {
-
-                            message.textContent =
-                                "🌟 Outstanding! You have mastered Wave Motion.";
-
-                        }
-
-                        else if (
-                            quizScore >= 4
-                        ) {
-
-                            message.textContent =
-                                "👏 Great job! Review a few concepts and try again.";
-
-                        }
-
-                        else {
-
-                            message.textContent =
-                                "📚 Keep learning! Go through the Notes and Simulation.";
-                        }
-                    }
-
-
-                    return;
+                    message.textContent =
+                        "📚 Keep learning! Go through the Notes and Simulation.";
                 }
 
 
-                loadQuestion();
-
+                return;
             }
-        );
-    }
 
 
-    /* =====================================================
-       START QUIZ
-    ===================================================== */
+            loadQuestion();
+
+        }
+    );
+
 
     loadQuestion();
-
-}
 }

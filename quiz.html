@@ -44,9 +44,7 @@
             Challenges
         </a>
 
-        <a
-            href="quiz.html"
-            class="active">
+        <a href="quiz.html" class="active">
             Quiz
         </a>
 
@@ -58,82 +56,93 @@
 <main class="quiz-page">
 
 
-    <div class="page-heading center">
+    <div class="page-heading">
 
-        <div class="badge">
-            MASTERY TEST
+        <div>
+
+            <div class="badge">
+                STAGE 4 — MASTERY QUIZ
+            </div>
+
+            <h1>
+                Wave Motion Quiz
+            </h1>
+
+            <p>
+                Test your understanding of wave motion.
+            </p>
+
         </div>
-
-        <h1>
-            🏆 Wave Motion Quiz
-        </h1>
-
-        <p>
-            Test your understanding of wave motion.
-        </p>
 
     </div>
 
 
-    <div class="quiz-container">
+    <!-- QUIZ -->
+
+    <section
+        class="quiz-container">
 
 
         <div class="quiz-top">
 
             <span id="questionNumber">
-                Question 1 of 5
+                Question 1 of 7
             </span>
 
-            <span id="quizScore">
+
+            <strong id="quizScore">
                 Score: 0
-            </span>
+            </strong>
 
         </div>
 
 
-        <div class="quiz-progress">
+        <div class="progress-bar">
 
-            <div id="quizProgress">
+            <div
+                id="quizProgress"
+                class="progress-fill">
             </div>
 
         </div>
 
 
-        <div class="quiz-card">
-
-
-            <div class="question-icon">
-                ❓
-            </div>
-
+        <div class="question-box">
 
             <h2 id="quizQuestion">
+                Loading question...
             </h2>
-
-
-            <div id="quizOptions">
-            </div>
-
-
-            <div id="quizFeedback">
-            </div>
-
-
-            <button
-                id="nextQuestion"
-                class="primary-btn"
-                style="display:none;">
-
-                Next Question →
-
-            </button>
 
         </div>
 
-    </div>
+
+        <div
+            id="quizOptions"
+            class="quiz-options">
+        </div>
 
 
-    <div
+        <div
+            id="quizFeedback"
+            class="quiz-feedback">
+        </div>
+
+
+        <button
+            id="nextQuestion"
+            class="primary-btn next-btn">
+
+            Next Question →
+
+        </button>
+
+
+    </section>
+
+
+    <!-- RESULT -->
+
+    <section
         id="quizResult"
         class="quiz-result"
         style="display:none;">
@@ -150,27 +159,38 @@
 
 
         <p>
-            Your final score:
+            Your final score
         </p>
 
 
         <strong id="finalScore">
+            0 / 7
         </strong>
 
 
         <p id="resultMessage">
+            Good attempt!
         </p>
 
 
-        <button
-            onclick="location.reload()"
+        <a
+            href="quiz.html"
             class="primary-btn">
 
             🔄 Try Again
 
-        </button>
+        </a>
 
-    </div>
+
+        <a
+            href="simulation.html"
+            class="secondary-btn">
+
+            🌊 Back to Simulation
+
+        </a>
+
+    </section>
 
 
 </main>
@@ -179,7 +199,7 @@
 <footer>
 
     <p>
-        🌊 Physics Lab • Master Wave Motion
+        🌊 Physics Lab • Wave Motion
     </p>
 
 </footer>
