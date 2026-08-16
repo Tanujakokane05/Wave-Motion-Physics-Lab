@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Wave Motion Simulation</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header class="topbar">
+
+    <div class="logo">
+        🌊 <span>Physics Lab</span>
+    </div>
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a
+            href="simulation.html"
+            class="active">
+            Simulation
+        </a>
+
+        <a href="notes.html">
+            Notes
+        </a>
+
+        <a href="challenges.html">
+            Challenges
+        </a>
+
+        <a href="quiz.html">
+            Quiz
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main class="simulation-page">
+
+
+    <!-- PAGE HEADING -->
+
+    <div class="page-heading">
+
+        <div>
+
+            <div class="badge">
+                STAGE 2 — WAVE MOTION
+            </div>
+
+            <h1>
+                Wave Motion Lab
+            </h1>
+
+            <p>
+                Change the wave properties and observe
+                how the wave changes.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <section class="simulation-layout">
+
+
+        <!-- CONTROL PANEL -->
+
+        <aside class="control-panel">
+
+            <h2>
+                ⚙️ Wave Controls
+            </h2>
+
+
+            <!-- FREQUENCY -->
+
+            <div class="control">
+
+                <div class="control-title">
+
+                    <span>
+                        Frequency
+                    </span>
+
+                    <strong id="frequencyValue">
+                        2 Hz
+                    </strong>
+
+                </div>
+
+
+                <input
+                    type="range"
+                    id="frequencySlider"
+                    min="1"
+                    max="10"
+                    value="2"
+                    step="0.5">
+
+
+                <div class="range-label">
+
+                    <span>
+                        1 Hz
+                    </span>
+
+                    <span>
+                        10 Hz
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- WAVELENGTH -->
+
+            <div class="control">
+
+                <div class="control-title">
+
+                    <span>
+                        Wavelength
+                    </span>
+
+                    <strong id="wavelengthValue">
+                        2 m
+                    </strong>
+
+                </div>
+
+
+                <input
+                    type="range"
+                    id="wavelengthSlider"
+                    min="0.5"
+                    max="5"
+                    value="2"
+                    step="0.5">
+
+
+                <div class="range-label">
+
+                    <span>
+                        0.5 m
+                    </span>
+
+                    <span>
+                        5 m
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- AMPLITUDE -->
+
+            <div class="control">
+
+                <div class="control-title">
+
+                    <span>
+                        Amplitude
+                    </span>
+
+                    <strong id="amplitudeValue">
+                        1 m
+                    </strong>
+
+                </div>
+
+
+                <input
+                    type="range"
+                    id="amplitudeSlider"
+                    min="0.2"
+                    max="2"
+                    value="1"
+                    step="0.1">
+
+
+                <div class="range-label">
+
+                    <span>
+                        0.2 m
+                    </span>
+
+                    <span>
+                        2 m
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- SPEED -->
+
+            <div class="control">
+
+                <div class="control-title">
+
+                    <span>
+                        Wave Speed
+                    </span>
+
+                    <strong id="speedValue">
+                        4 m/s
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="primary-btn full"
+                id="playBtn">
+
+                ▶ Play Wave
+
+            </button>
+
+
+            <button
+                class="secondary-btn full"
+                id="pauseBtn">
+
+                ⏸ Pause
+
+            </button>
+
+
+            <button
+                class="secondary-btn full"
+                id="resetWaveBtn">
+
+                ↻ Reset
+
+            </button>
+
+
+            <!-- OBSERVATION -->
+
+            <div class="observation-box">
+
+                <h3>
+                    💡 Observe
+                </h3>
+
+                <p id="waveObservation">
+
+                    Change frequency and observe
+                    the distance between waves.
+
+                </p>
+
+            </div>
+
+        </aside>
+
+
+        <!-- SIMULATION AREA -->
+
+        <section class="simulation-area">
+
+
+            <!-- STATS -->
+
+            <div class="stats">
+
+
+                <div class="stat">
+
+                    <span>
+                        FREQUENCY
+                    </span>
+
+                    <strong id="frequencyStat">
+                        2 Hz
+                    </strong>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <span>
+                        WAVELENGTH
+                    </span>
+
+                    <strong id="wavelengthStat">
+                        2 m
+                    </strong>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <span>
+                        AMPLITUDE
+                    </span>
+
+                    <strong id="amplitudeStat">
+                        1 m
+                    </strong>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <span>
+                        WAVE SPEED
+                    </span>
+
+                    <strong id="speedStat">
+                        4 m/s
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- WAVE STAGE -->
+
+            <div class="wave-stage">
+
+                <div class="stage-label">
+                    🌊 Live Wave
+                </div>
+
+
+                <div class="mean-line"></div>
+
+
+                <div class="crest-label">
+                    Crest
+                </div>
+
+
+                <div class="trough-label">
+                    Trough
+                </div>
+
+
+                <canvas
+                    id="waveCanvas">
+                </canvas>
+
+
+                <div class="axis-label">
+                    Distance →
+                </div>
+
+            </div>
+
+
+            <!-- FORMULA -->
+
+            <div class="formula-panel">
+
+
+                <div class="formula-header">
+
+                    <span>
+                        LIVE CALCULATION
+                    </span>
+
+                    <span class="live">
+                        ● LIVE
+                    </span>
+
+                </div>
+
+
+                <div class="formula">
+
+
+                    <div>
+
+                        <small>
+                            Wave Equation
+                        </small>
+
+                        <strong>
+                            v = fλ
+                        </strong>
+
+                    </div>
+
+
+                    <div class="equals">
+                        =
+                    </div>
+
+
+                    <div>
+
+                        <small>
+                            Current Calculation
+                        </small>
+
+                        <strong id="waveCalculation">
+
+                            v = 2 × 2 = 4 m/s
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- WAVE INFORMATION -->
+
+            <div class="wave-info-panel">
+
+
+                <div>
+
+                    <span>
+                        PERIOD
+                    </span>
+
+                    <strong id="periodValue">
+                        0.50 s
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        CREST
+                    </span>
+
+                    <strong>
+                        Maximum displacement
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        TROUGH
+                    </span>
+
+                    <strong>
+                        Minimum displacement
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+           <!-- GRAPH -->
+
+<div class="graph-panel">
+
+    <div class="graph-title">
+
+        <h2>
+            📊 Wave Profile
+        </h2>
+
+        <span>
+            Displacement vs Distance
+        </span>
+
+    </div>
+
+    <canvas
+        id="waveGraph">
+    </canvas>
+
+    <div class="graph-info">
+
+        <span>🔵 Displacement</span>
+
+        <span>📏 Distance</span>
+
+        <span>🟡 Crest</span>
+
+        <span>🔴 Trough</span>
+
+    </div>
+
+</div>
+
+
+        </section>
+
+    </section>
+
+
+    <!-- LEARNING -->
+
+    <section class="learning-grid">
+
+
+        <div class="learning-card">
+
+            <span>
+                📏
+            </span>
+
+            <h3>
+                Wavelength
+            </h3>
+
+            <p>
+                Increasing wavelength increases
+                the distance between two consecutive
+                crests.
+            </p>
+
+            <strong>
+                λ ↑ → distance ↑
+            </strong>
+
+        </div>
+
+
+        <div class="learning-card">
+
+            <span>
+                🔄
+            </span>
+
+            <h3>
+                Frequency
+            </h3>
+
+            <p>
+                Frequency tells us how many oscillations
+                occur every second.
+            </p>
+
+            <strong>
+                f = 1/T
+            </strong>
+
+        </div>
+
+
+        <div class="learning-card">
+
+            <span>
+                📐
+            </span>
+
+            <h3>
+                Amplitude
+            </h3>
+
+            <p>
+                Amplitude represents the maximum displacement
+                from the mean position.
+            </p>
+
+            <strong>
+                A ↑ → wave height ↑
+            </strong>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<footer>
+
+    <p>
+        🌊 Physics Lab • Learn by Experimenting
+    </p>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

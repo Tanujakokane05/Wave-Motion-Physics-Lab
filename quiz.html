@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Wave Motion Quiz</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header class="topbar">
+
+    <div class="logo">
+        🌊 <span>Physics Lab</span>
+    </div>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="simulation.html">
+            Simulation
+        </a>
+
+        <a href="notes.html">
+            Notes
+        </a>
+
+        <a href="challenges.html">
+            Challenges
+        </a>
+
+        <a
+            href="quiz.html"
+            class="active">
+            Quiz
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main class="quiz-page">
+
+
+    <div class="page-heading center">
+
+        <div class="badge">
+            MASTERY TEST
+        </div>
+
+        <h1>
+            🏆 Wave Motion Quiz
+        </h1>
+
+        <p>
+            Test your understanding of wave motion.
+        </p>
+
+    </div>
+
+
+    <div class="quiz-container">
+
+
+        <div class="quiz-top">
+
+            <span id="questionNumber">
+                Question 1 of 5
+            </span>
+
+            <span id="quizScore">
+                Score: 0
+            </span>
+
+        </div>
+
+
+        <div class="quiz-progress">
+
+            <div id="quizProgress">
+            </div>
+
+        </div>
+
+
+        <div class="quiz-card">
+
+
+            <div class="question-icon">
+                ❓
+            </div>
+
+
+            <h2 id="quizQuestion">
+            </h2>
+
+
+            <div id="quizOptions">
+            </div>
+
+
+            <div id="quizFeedback">
+            </div>
+
+
+            <button
+                id="nextQuestion"
+                class="primary-btn"
+                style="display:none;">
+
+                Next Question →
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="quizResult"
+        class="quiz-result"
+        style="display:none;">
+
+
+        <div class="result-icon">
+            🏆
+        </div>
+
+
+        <h2>
+            Quiz Completed!
+        </h2>
+
+
+        <p>
+            Your final score:
+        </p>
+
+
+        <strong id="finalScore">
+        </strong>
+
+
+        <p id="resultMessage">
+        </p>
+
+
+        <button
+            onclick="location.reload()"
+            class="primary-btn">
+
+            🔄 Try Again
+
+        </button>
+
+    </div>
+
+
+</main>
+
+
+<footer>
+
+    <p>
+        🌊 Physics Lab • Master Wave Motion
+    </p>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
